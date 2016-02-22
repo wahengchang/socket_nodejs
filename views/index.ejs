@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+
+         <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script> 
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+
+    <hr>
+        <div id="future"></div>
+        <form id="form" id="chat_form">
+            <input id="chat_input" type="text">
+            <input type="submit" value="Send">
+        </form>
+
+		<script>  
+		    var socket = io.connect('http://localhost:3001');
+		    socket.on('connect', function(data) {
+		        socket.emit('join', 'Hello World from client');
+		    });
+
+	        socket.on('messages', function(data) {
+	                alert(data);
+	        });
+
+	        socket.on('broad', function(data) {
+	                console.log("broad: "+data);
+	        });
+
+			 $('form').submit(function(e){
+
+			 	 console.log("form submit22222");
+			     e.preventDefault();
+			     var message = $('#chat_input').val();
+			     socket.emit('messages', message);
+			 	 console.log("form submit33333 :"+message);
+			 });
+		</script>
+
+  </body>
+</html>
+

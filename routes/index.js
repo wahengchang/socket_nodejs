@@ -7,5 +7,9 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
+router.get('/command', function(req, res, next) {
+  res.render('command', { title: 'command' });
+});
+
 
 module.exports = router;

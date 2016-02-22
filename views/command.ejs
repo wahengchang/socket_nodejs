@@ -27,8 +27,8 @@
 		        socket.emit('join', 'Hello World from client');
 		    });
 
-	        socket.on('messages', function(data) {
-	                console.log("messages: "+data);
+	        socket.on('command', function(data) {
+	                console.log("command: "+data);
 	        });
 
 	        socket.on('broad', function(data) {
@@ -41,7 +41,7 @@
 			 	 console.log("form submit22222");
 			     e.preventDefault();
 			     var message = $('#chat_input').val();
-			     socket.emit('messages', message);
+			     socket.emit('command', message);
 			 	 console.log("form submit33333 :"+message);
 			 });
 

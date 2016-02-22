@@ -8,9 +8,13 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
+var child_process = require('child_process');
+
 var app = express();
 
+// ============== socket.io.js  ============
 var server = require('http').createServer(app);
+// ==========================================
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -54,6 +58,19 @@ io.on('connection', function(client){
            client.broadcast.emit('broad',data);
     });
 
+    client.on('command', function(data) {
+
+      console.log("here command");
+      console.log("data: "+data);
+
+      child_process.exec(data, function(err, stdout, stderr) {
+           client.emit('broad', stdout);
+           client.broadcast.emit('broad',stdout);
+          console.log("stdout: "+stdout);
+          console.log("err: "+err);
+          console.log("stderr: "+stderr);
+      });
+    });
 });
 
 // error handlers
